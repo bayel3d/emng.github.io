@@ -5,7 +5,7 @@
 */
 
 (function($) {
-
+	
 	var	$window = $(window),
 		$head = $('head'),
 		$body = $('body');
@@ -51,36 +51,64 @@
 	// Fixes.
 
 		// Object fit images.
-			if (!browser.canUse('object-fit')
-			||	browser.name == 'safari')
-				$('.image.object').each(function() {
+			// if (!browser.canUse('object-fit')
+			// ||	browser.name == 'safari')
+			// 	$('.image.object').each(function() {
 
+			// 		var $this = $(this),
+			// 			$img = $this.children('img');
+
+			// 		// Hide original image.
+			// 			$img.css('opacity', '0');
+
+			// 		// Set background.
+			// 			$this
+			// 				.css('background-image', 'url("' + $img.attr('src') + '")')
+			// 				.css('background-size', $img.css('object-fit') ? $img.css('object-fit') : 'cover')
+			// 				.css('background-position', $img.css('object-position') ? $img.css('object-position') : 'center');
+
+			// 	});
+
+			if (!browser.canUse('object-fit') || browser.name == 'safari') {
+				$('.image.object').each(function() {
 					var $this = $(this),
 						$img = $this.children('img');
-
+			
 					// Hide original image.
-						$img.css('opacity', '0');
-
-					// Set background.
-						$this
-							.css('background-image', 'url("' + $img.attr('src') + '")')
-							.css('background-size', $img.css('object-fit') ? $img.css('object-fit') : 'cover')
-							.css('background-position', $img.css('object-position') ? $img.css('object-position') : 'center');
-
+					$img.css('opacity', '0');
+			
+					// Set background image.
+					$this.css({
+						'background-image': 'url("' + $img.attr('src') + '")',
+						'background-size': 'cover',
+						'background-position': 'center',
+						'background-repeat': 'no-repeat'
+					});
 				});
+			}
 
 	// Sidebar.
+
+	
+	// Initialize the sidebar and add the 'inactive' class to hide it
+
 		var $sidebar = $('#sidebar'),
-			$sidebar_inner = $sidebar.children('.inner');
+    	$sidebar_inner = $sidebar.children('.inner');
 
-		// Inactive by default on <= large.
-			breakpoints.on('<=large', function() {
-				$sidebar.addClass('inactive');
-			});
+		$sidebar.addClass('inactive');
 
-			breakpoints.on('>large', function() {
-				$sidebar.removeClass('inactive');
-			});
+
+		// var $sidebar = $('#sidebar'),
+		// 	$sidebar_inner = $sidebar.children('.inner');
+		
+		// // // Inactive by default on <= large.
+		// 	breakpoints.on('<=large', function() {
+		// 		$sidebar.addClass('inactive');
+		// 	});
+
+		// 	breakpoints.on('>=large', function() {
+		// 		$sidebar.removeClass('inactive');
+		// 	});
 
 		// Hack: Workaround for Chrome/Android scrollbar position bug.
 			if (browser.os == 'android'
@@ -260,3 +288,29 @@
 			});
 
 })(jQuery);
+
+// darkModeButton
+
+// Получаем ссылку на кнопку
+const darkModeButton = document.querySelector('.dark-mode-button');
+
+// Получаем ссылку на элемент, который нужно изменить при переключении темы
+const body = document.body;
+
+// Проверяем, сохранена ли предыдущая настройка темы в Local Storage
+const isDarkMode = localStorage.getItem('darkMode') === 'true';
+
+// Если сохранена, применяем темную тему
+if (isDarkMode) {
+  body.classList.add('dark-mode');
+}
+
+// Добавляем обработчик события на клик по кнопке
+darkModeButton.addEventListener('click', () => {
+  // Переключаем класс для изменения темы
+  body.classList.toggle('dark-mode');
+
+  // Сохраняем текущее состояние темы в Local Storage
+  const isDarkModeEnabled = body.classList.contains('dark-mode');
+  localStorage.setItem('darkMode', isDarkModeEnabled);
+});
