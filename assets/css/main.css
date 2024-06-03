@@ -2526,7 +2526,7 @@ button,
 }
 
 /* Скрыть кнопки реакций в Disqus */
-#disqus_thread .reaction-box {
+#reactions__container {
     display: none !important;
 }
 
