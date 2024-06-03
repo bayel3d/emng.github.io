@@ -2524,19 +2524,3 @@ button,
 .dark-mode #search form:before {
   color: #f0f0f0;
 }
-
-/* Скрыть кнопки реакций в Disqus */
-#reactions__container {
-    display: none !important;
-}
-
-/* Скрыть кнопки "Поделиться" в Disqus */
-#disqus_thread .share {
-    display: none !important;
-}
-
-/* Скрыть рекламу Disqus */
-#disqus_thread .disqus-ads,
-#disqus_thread .disqus-footer {
-    display: none !important;
-}
