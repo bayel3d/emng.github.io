@@ -291,26 +291,33 @@
 
 // darkModeButton
 
-// Получаем ссылку на кнопку
 const darkModeButton = document.querySelector('.dark-mode-button');
-
-// Получаем ссылку на элемент, который нужно изменить при переключении темы
 const body = document.body;
-
-// Проверяем, сохранена ли предыдущая настройка темы в Local Storage
 const isDarkMode = localStorage.getItem('darkMode') === 'true';
-
-// Если сохранена, применяем темную тему
 if (isDarkMode) {
   body.classList.add('dark-mode');
 }
+const updateIcon = (isDarkModeEnabled) => {
+  const moonIcon = document.getElementById('moon');
+  const sunIcon = document.getElementById('sun');
+  if (isDarkModeEnabled) {
+    moonIcon.style.display = 'inline';
+    sunIcon.style.display = 'none';
+  } else {
+    moonIcon.style.display = 'none';
+    sunIcon.style.display = 'inline';
+  }
+};
 
-// Добавляем обработчик события на клик по кнопке
-darkModeButton.addEventListener('click', () => {
-  // Переключаем класс для изменения темы
+updateIcon(isDarkMode);
+
+darkModeButton.addEventListener('click', (e) => {
+  e.preventDefault();
   body.classList.toggle('dark-mode');
 
-  // Сохраняем текущее состояние темы в Local Storage
   const isDarkModeEnabled = body.classList.contains('dark-mode');
   localStorage.setItem('darkMode', isDarkModeEnabled);
+
+  updateIcon(isDarkModeEnabled);
 });
+
